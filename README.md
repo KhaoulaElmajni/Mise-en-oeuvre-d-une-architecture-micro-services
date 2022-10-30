@@ -233,6 +233,12 @@ networks:
     
 ![](https://i.imgur.com/UI9TQA3.png)
 
+les interfaces de documentations Swagger
+![](https://i.imgur.com/t8QHuLw.png)
+    
+![](https://i.imgur.com/AdkXs0X.png)
+
+
 
     
 * <strong style="color: dark ; opacity: 0.80">Enfin nous tenons à remercier le seul et unique, notre professeur Mr YOUSFI Mohamed *Docteur & professeur à l'ENSET MEDIA* pour son soutien et son encouragement envers nous, aussi pour nous avoir donné cette opportunité d'améliorer nos compétences et de connaître les nouvelles technologies comme celles qui nous avons travaillé.
