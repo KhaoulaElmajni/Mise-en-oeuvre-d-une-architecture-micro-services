@@ -121,19 +121,23 @@ public interface CustomerRestClient {
 ## <span style="color:green ">4.Structure du projet</span>
 
 >discovery-service
-    
+![](https://i.imgur.com/OZ07yCs.png)
+
     
 >gateway-service
     
+![](https://i.imgur.com/lhyHAmz.png)
+
+    
 >customer-service
+![](https://i.imgur.com/05RWOKK.png)
+
     
 >billing service
+![](https://i.imgur.com/FfHyhS1.png)
 
 
- ## <span style="color:green ">5.CONCEPTION & ANALYSES</span>
- * ###### <strong style="color:red; opacity: 0.80">Diagramme de classe </strong>
-> Diagramme de classe [color=#fd837b]
-
+ 
   ---
 
 
