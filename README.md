@@ -55,6 +55,9 @@ L'application offre les fonctionnalités suivantes :
 
 ![](https://i.imgur.com/PAA90rD.png)
 
+![](https://i.imgur.com/wsarJzI.png)
+
+
 
 ## <span style="color:#66ff66">Le service de gateway "Spring Cloud gateway service" :label: </span>
 ![](https://i.imgur.com/Gd96MRt.png)
@@ -118,6 +121,12 @@ public interface CustomerRestClient {
 
 *voir également à propos de [Swagger](https://swagger.io/docs/specification/2-0/what-is-swagger/) :link: 
     
+  #### <span style="color:#0036ad"> 7.Docker Compose</span>
+ * <strong style="color:dark">Compose est un outil permettant de définir et d'exécuter des applications Docker multi-conteneurs. Avec Compose, vous utilisez un fichier YAML pour configurer les services de votre application.
+    
+
+*voir également à propos de [Docker Compose](https://docs.docker.com/compose/) :link: 
+    
 ## <span style="color:green ">4.Structure du projet</span>
 
 >discovery-service
@@ -143,9 +152,86 @@ public interface CustomerRestClient {
 
 
 
- ## <strong style="color: green; opacity: 0.80" >6.comment ça marche ?</strong>
-    
+ ## <strong style="color: green; opacity: 0.80" >6.comment ça marche avec Docker?</strong>
+1. extraire les fichiers "jar"
+![](https://i.imgur.com/0GPBPhf.png)
+![](https://i.imgur.com/5knzBPF.png)
+![](https://i.imgur.com/horgqD2.png)
+![](https://i.imgur.com/PUdomjJ.png)
 
+2. créer les images dans docker
+
+![](https://i.imgur.com/oDkKVhy.png)
+
+3. créer le script .yml pour créer le réseau des conainers
+```
+  version: '3'
+services:
+  eureka-service:
+    build: ./discovery-service/
+    hostname: discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - default-network
+
+  customer-service:
+    build: ./customer-service/
+    hostname: customer-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-service
+    environment:
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+    networks:
+      - default-network
+
+  billing-service:
+    build: ./Billing-serviceVF/
+    hostname: billing-service
+    ports:
+      - "8083:8083"
+    restart: on-failure
+    depends_on:
+      - customer-service
+      - eureka-service
+    environment:
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+    networks:
+      - default-network
+
+  gateway-service:
+    build: ./gateway-service/
+    hostname: gateway-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - customer-service
+      - billing-service
+      - eureka-service
+    environment:
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
+    networks:
+      - default-network
+
+networks:
+  default-network:
+    driver: bridge
+  
+```
+    _> docker-compose up
+![](https://i.imgur.com/LJlSgk8.png)
+![](https://i.imgur.com/xer16Ki.png)
+    
+![](https://i.imgur.com/Azmxe8S.png)
+
+
+>les APIs:
+    
+![](https://i.imgur.com/Qd4sKcw.png)
+    
+![](https://i.imgur.com/UI9TQA3.png)
 
 
     
