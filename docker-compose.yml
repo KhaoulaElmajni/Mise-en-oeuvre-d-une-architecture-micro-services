@@ -1,50 +1,50 @@
 version: '3'
 services:
   eureka-service:
-    build: ./EurekaService/
+    build: ./discovery-service/
     hostname: discovery-service
     ports:
-      - "9761:8761"
+      - "8761:8761"
     networks:
       - default-network
 
   customer-service:
-    build: ./CustomerService/
+    build: ./customer-service/
     hostname: customer-service
     ports:
-      - "9091:8082"
+      - "8082:8082"
     depends_on:
-      - discovery-service
+      - eureka-service
     environment:
-      - eureka.client.service-url.defaultZone=http://eureka-service:9761/eureka
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
     networks:
       - default-network
 
   billing-service:
-    build: ./BillingService/
+    build: ./Billing-serviceVF/
     hostname: billing-service
     ports:
-      - "9092:8083"
+      - "8083:8083"
     restart: on-failure
     depends_on:
       - customer-service
       - eureka-service
     environment:
-      - eureka.client.service-url.defaultZone=http://eureka-service:9761/eureka
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
     networks:
       - default-network
 
   gateway-service:
-    build: ./GatewayService/
+    build: ./gateway-service/
     hostname: gateway-service
     ports:
-      - "9999:8888"
+      - "8888:8888"
     depends_on:
       - customer-service
       - billing-service
-      - discovery-service
+      - eureka-service
     environment:
-      - eureka.client.service-url.defaultZone=http://eureka-service:9761/eureka
+      - eureka.client.service-url.defaultZone=http://discovery-service:8761/eureka
     networks:
       - default-network
 
